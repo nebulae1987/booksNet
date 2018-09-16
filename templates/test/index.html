@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <h1 align="center">booksNet</h1>
+        <hr>
+        {% for ebook in editor_book %}
+        书名：{{ ebook.name}}-----作者：{{ ebook.author }}-----价格：{{ ebook.dprice }}-----定价：{{ ebook.price }}<img src="{% static '' %}{{ ebook.book_img.url }}" alt="" style="border-radius: 40px;width: 80px;vertical-align: middle;"/> <br>
+
+        {% endfor %}
+
+</body>
+</html>

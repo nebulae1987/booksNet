@@ -1,0 +1,131 @@
+<style>
+	.table1{
+		border-color: lightgray;
+	}
+	.td1,.td2{
+		height: 36px;
+	}
+	.td1{
+		text-align: right;
+		padding-right: 5px;
+		background-color: rgb(230,242,254);
+		font-size: 14px;
+	}
+	.td2{
+		padding-left: 5px;
+	}
+</style>
+<form action="{% url 'index:addbook' %}" method="post" enctype="multipart/form-data">
+       {% csrf_token %}
+<table class="table1" border="1" cellspacing="0" width="1110px">
+	<tr>
+		<td class="td1">商品名称:</td>
+		<td class="td2"><input type="text" name="name"></td>
+	</tr>
+	<tr>
+		<td class="td1">作者:</td>
+		<td class="td2"><input type="text" name="author"></td>
+	</tr>
+	<tr>
+		<td class="td1">出版社:</td>
+		<td class="td2"><input type="text" name="pub_company"></td>
+	</tr>
+	<tr>
+		<td class="td1">商品父类:</td>
+		<td class="td2">
+			<select name="category">
+                {% for i in b_level %}
+                <option value="{{ i.id }}">{{ i.category_name }}</option>
+				{% endfor %}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="td1">出版日期:</td>
+		<td class="td2">
+			<input type="date" name="pub_time">
+		</td>
+	</tr>
+    <tr>
+		<td class="td1">版次:</td>
+		<td class="td2"><input type="text" name="revision"></td>
+	</tr>
+    <tr>
+		<td class="td1">ISBN:</td>
+		<td class="td2"><input type="text" name="ISBN"></td>
+	</tr>
+    <tr>
+		<td class="td1">字数:</td>
+		<td class="td2"><input type="text" name="word_count"></td>
+	</tr>
+    <tr>
+		<td class="td1">页数:</td>
+		<td class="td2"><input type="text" name="page_count"></td>
+	</tr>
+    <tr>
+		<td class="td1">开本:</td>
+		<td class="td2"><input type="text" name="page_type"></td>
+	</tr>
+    <tr>
+		<td class="td1">纸张:</td>
+		<td class="td2"><input type="text" name="paper"></td>
+	</tr>
+    <tr>
+		<td class="td1">包装:</td>
+		<td class="td2"><input type="text" name="wrapper"></td>
+	</tr>
+    <tr>
+		<td class="td1">定价:</td>
+		<td class="td2"><input type="text" name="price"></td>
+	</tr>
+    <tr>
+		<td class="td1">当当价:</td>
+		<td class="td2"><input type="text" name="dprice"></td>
+	</tr>
+        <tr>
+		<td class="td1">编辑推荐(1-5):</td>
+		<td class="td2"><input type="text" name="editor_recommend"></td>
+	</tr>
+        <tr>
+		<td class="td1">印刷时间:</td>
+		<td class="td2"><input type="date" name="print_time"></td>
+	</tr>
+        <tr>
+		<td class="td1">印次:</td>
+		<td class="td2"><input type="text" name="impression" /></td>
+	</tr>
+        <tr>
+		<td class="td1">库存:</td>
+		<td class="td2"><input type="text" name="stock" /></td>
+	</tr>
+        <tr>
+		<td class="td1">上线时间:</td>
+		<td class="td2"><input type="date" name="online_date"></td>
+	</tr>
+        <tr>
+		<td class="td1">评价(1-5):</td>
+		<td class="td2"><input type="text" name="score"></td>
+	</tr>
+        <tr>
+		<td class="td1">销量:</td>
+		<td class="td2"><input type="text" name="sales"></td>
+	</tr>
+        <tr>
+		<td class="td1">图书插图:</td>
+		<td class="td2"><input type="file" name="digest_img"></td>
+	</tr>
+    </tr>
+        <tr>
+		<td class="td1">图书封面:</td>
+		<td class="td2"><input type="file" name="book_img"></td>
+	</tr>
+    </tr>
+        <tr>
+		<td class="td1">添加图书:</td>
+		<td class="td2"><input type="submit" value="提 交"></td>
+	</tr>
+
+
+</table>
+
+</form>

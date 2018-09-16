@@ -1,0 +1,191 @@
+{% load static %}
+
+<style>
+	.d1{
+		background-color: rgb(53,60,68);
+		position: relative;
+		height: 30px;
+		line-height: 30px;
+		padding-left: 10px;
+	}
+	.s1{
+		font-size: 12px;
+		color: white;
+	}
+	.s2{
+		position: absolute;
+		left: 1050px;
+	}
+	.s2 a{
+		color: white;
+		font-size: 12px;
+		text-decoration: none;
+	}
+	.t1{
+		border-color:aliceblue;
+		margin-top: 2px;
+		font-size: 12px;
+		text-align: center;
+		background-color: rgb(230,242,254);
+	}
+	.bottom{
+		font-size: 13px;
+		padding-left: 15px;
+		position: relative;
+	}
+	.bs{
+		position: absolute;
+		right: 40px;
+	}
+	.bs a{
+		text-decoration: none;
+		color: black;
+	}
+	.bs a:hover{
+		color: cornflowerblue;
+		text-decoration: underline;
+	}
+    img{
+        width: 30px;
+        border-radius: 16px;
+    }
+    td a:hover{
+        color:red;
+    }
+</style>
+<form action="{% url 'admins:del_book' %}" method="post" enctype="multipart/form-data" id="forms">
+{% csrf_token %}
+<div class="d1" style="width:1400px;">
+	<span class="s1">商品基本信息表</span>
+	<span class="s2">
+{#		<button onclick="sec_book()">修改图书</button>#}
+{##}
+		<input type="submit" value="删除" />
+{#        <button>全选</button>#}
+{#        <button>全部取消</button>#}
+{#        <button>反选</button>#}
+	</span>
+</div>
+
+<table border="2" width="1400px" cellspacing="0" class="t1">
+	<tr>
+		<td>
+			<input type="checkbox" />
+		</td>
+		<th>商品ID</th>
+		<th>商品名称<br>(点击修改)</th>
+		<th>作者</th>
+		<th>出版社</th>
+		<th>出版时间</th>
+        <th>库存</th>
+		<th>上线时间</th>
+		<th>评价</th>
+		<th>销量</th>
+		<th>图书插图</th>
+		<th>图书封面</th>
+		<th>图书分类</th>
+        <th>定价</th>
+		<th>当当价格</th>
+		<th>版次</th>
+		<th>ISBN</th>
+		<th>字数</th>
+		<th>页数</th>
+		<th>开本</th>
+		<th>纸张</th>
+		<th>包装</th>
+		<th>编辑推荐</th>
+		<th>印刷时间</th>
+		<th>印次</th>
+	</tr>
+    {% if books %}
+    {% for book in books %}
+        <tr>
+		<td>
+			<input type="checkbox" name="se_book" value="{{ book.id }}" id="se_book" class="chbook"/>
+		</td>
+		<td>{{ book.id }}</td>
+		<td><a href="{% url 'admins:reviseLogic' %}?book_id={{ book.id }}">{{ book.name }}</a></td>
+		<td>{{ book.author }}</td>
+		<td>{{ book.pub_company }}</td>
+		<td>{{ book.pub_time }}</td>
+        <td>{{ book.stock }}</td>
+		<td>{{ book.online_date }}</td>
+		<td>{{ book.score }}</td>
+		<td>{{ book.sales }}</td>
+		<td><img src="{% static '' %}{{ book.digest_img.url }}" ></td>
+		<td><img src="{% static '' %}{{ book.book_img.url }}"></td>
+		<td>{{ book.category.category_name }}</td>
+        <td>{{ book.price }}</td>
+		<td>{{ book.dprice }}</td>
+		<td>{{ book.revision }}</td>
+		<td>{{ book.ISBN }}</td>
+		<td>{{ book.word_count }}</td>
+		<td>{{ book.page_count }}</td>
+		<td>{{ book.page_type }}</td>
+		<td>{{ book.paper }}</td>
+		<td>{{ book.wrapper }}</td>
+		<td>{{ book.editor_recommend }}</td>
+		<td>{{ book.print_time }}</td>
+		<td>{{ book.impression }}</td>
+	    </tr>
+
+    {% endfor %}
+    {% endif %}
+</table>
+{#<input type="submit" value="删除">#}
+
+</form>
+    <button>全选</button>
+    <button>全部取消</button>
+    <button>反选</button>
+<p></p>
+<div class="bottom">
+	共有 {{ books.paginator.count }}条记录，当前第 {{ books.number }} 页，共{{ books.paginator.num_pages }} 页
+	<span class="bs">
+        <a href="{% url 'admins:list' %}?num=1" style="margin-right: 20px;">首页</a>
+        {% if books.has_previous %}
+		<a href="{% url 'admins:list' %}?num={{ books.previous_page_number }}" style="margin-right: 20px;">上一页</a>
+		{% endif %}
+
+        {% if books.has_next %}
+		<a href="{% url 'admins:list' %}?num={{ books.next_page_number }}">下一页</a>
+        {% endif %}
+        <a href="{% url 'admins:list' %}?num={{ books.paginator.num_pages }}" style="margin-right: 20px;">尾页</a>
+	</span>
+</div>
+
+<script src="{% static 'booksNet/js/jquery-1.11.1.min.js' %}"></script>
+<script>
+{# *************** 删除选择的书籍***************************#}
+
+    var che = $('.chbook');
+	var but = document.getElementsByTagName("button");
+    lens = "{{ books|length }}";
+    console.log(lens);
+
+	//全选
+	but[0].onclick = function(){
+		for(var i=0; i<lens; i++){
+			che[i].checked = true;
+		}
+	}
+	//全部取消：
+	but[1].onclick = function(){
+		for(var i=0; i<lens; i++){
+			che[i].checked = false;
+		}
+	}
+
+	//反选
+	but[2].onclick = function(){
+		for(var i=0; i<lens; i++){
+			if (!che[i].checked) {
+				che[i].checked = true;
+			}else{
+				che[i].checked = false;
+			}
+		}
+	}
+
+
+</script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加图书</title>
+    <style>
+        input{
+            float: right;
+        }
+    </style>
+</head>
+<body style="background-image: url({% static 'booksNet/images/9112.jpg' %});">
+<h3 align="center">添加图书</h3><hr>
+<a href="{% url 'index:bookpage' %}?id=6" >测试</a>----<a href="{% url 'index:index_page' %}" target="_blank">首页</a>
+----<a href="{% url 'admins:adminsIndex' %}" target="_blank">管理</a>
+<div id="books" style="width: 340px;margin: auto;background: rgba(171,205,239,0.44);padding-left: 200px;padding-right: 200px">
+    <form action="{% url 'index:addbook' %}" method="post" enctype="multipart/form-data">
+       {% csrf_token %}
+        书---名：<input type="text" name="name"> <br>
+        作---者：<input type="text" name="author"> <br>
+        出版社：<input type="text" name="pub_company"> <br>
+        出版时间：<input type="text" name="pub_time"> <br>
+        版---次：<input type="text" name="revision"> <br>
+        ISBN：<input type="text" name="ISBN"> <br>
+        字---数：<input type="text" name="word_count"> <br>
+        页---数：<input type="text" name="page_count"> <br>
+        开---本：<input type="text" name="page_type"> <br>
+        纸---张：<input type="text" name="paper"> <br>
+        包---装：<input type="text" name="wrapper"> <br>
+{#        图书分类：<input type="text" name="category"> <br>#}
+        定---价：<input type="text" name="price"> <br>
+        当当价格：<input type="text" name="dprice"> <br>
+        编辑推荐：<input type="text" name="editor_recommend"> <br>
+        印刷时间：<input type="text" name="print_time"> <br>
+        印---次：<input type="text" name="impression" /> <br>
+        库---存：<input type="text" name="stock" />      <br>
+        上线时间：<input type="text" name="online_date"> <br>
+        评---价：<input type="text" name="score"> <br>
+        销---量：<input type="text" name="sales"> <br>
+        图书插图：<input type="file" name="digest_img">    <br>
+        图书照片：<input type="file" name="book_img">   <br><br><br>
+
+        <input type="submit" value="添加图书">
+    </form>
+
+
+</div>
+
+</body>
+</html>

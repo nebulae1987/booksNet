@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>订单表</title>
+<script src="{% static 'booksNet/js/jquery-1.11.1.min.js' %}"></script>
+	<link rel="shortcut icon" href="{% static 'booksNet/images/favicon.ico?v=20160901'%}" type="image/x-icon">
+    <link href="{% static 'booksNet/css/shopping_cart_new.css'%}" rel="stylesheet" type="text/css">
+	<link href="{% static 'booksNet/css/footer_150526.css'%}" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="padding-bottom:82px">
+
+<link href="{% static 'booksNet/css/header_960_150611.css'%}" rel="stylesheet" type="text/css">
+<script src="{% static 'booksNet/js/pagetop2015_0827.js'%}" charset="gb2312" type="text/javascript"></script>
+
+<div id="hd">
+<div id="tools">
+<div class="tools">
+    <div class="ddnewhead_operate" dd_name="顶链接">
+
+        <div class="ddnewhead_welcome" > <span id="nickname">
+            <span id="nickname">欢迎 <span style="color:red;" id="log_name">{% if username %}{{ username }}{% endif %}</span></span>
+            光临当当 请
+            <span id="go_login">
+            <a href="{% url 'user:loginpage' %}" class="login_link" target="_blank">登录</a>
+            <a href="{% url 'user:registpage' %}" target="_blank">免费注册</a></span>
+            <span id="go_logout" style="display:none;">
+                <a href="javascript:void(0)" onclick="check_log()" style="color:red;">登出</a></span>
+        </span>
+        </div>
+        <div class="new_head_znx" id="znx_content" style="display:inline-block; float: right"><a href="{% url 'admins:adminsIndex' %}" target="_blank">我的当当</a></div>
+        <div class="new_head_znx" id="znx_content" style="display:none;"></div>
+    </div>
+</div>
+</div>
+<div id="header_end"></div>
+<!--CreateDate  2016-09-28 11:30:01--></div>
+<form action="http://search.dangdang.com/search.aspx" id="bootpagetopSearch" name="bootpagetopSearch" method="GET"></form>
+<script type="text/javascript">var nick_num = 0;initHeaderOperate();</script><script type="text/javascript" src="http://orderb.dangdang.com/queryunpaid?callback=Unpaid_Data"></script>
+		<div class="shoppingcart_wrapper" id="ad_cpt_11850"><div><a href="http://a.dangdang.com/tjump.php?q=ddo84XQOf357bOs8tXGg5%2F%2F0oVoDImt3DFWsMqu7ZMSVsfUMeOQJueASNiMLjq%2FdrXMLCKnVfyKEahteAh1ih%2ByKYrKGzhvL20LVbDzObRambBA0YPpivy5hR5foQ4Rt%2BTB" target="_blank" rel="nofollow"><img src=""></a></div></div>
+<div class="logo_line">
+    <div class="w960">
+        <div class="shopping_procedure01 shopping_procedure "><span>我的购物车</span><span class="current">确认订单</span><span>完成订单</span></div>
+        <div class="logo"><a href="#"><img src="{% static 'booksNet/images/bz_logo_car.jpg'%}" alt=""></a></div>
+    </div>
+</div>
+<div class="indent_con">
+
+    <div class="shdz">
+    	<h3>您已选购以下商品：</h3>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tbody><tr style="height:30px; line-height:30px;">
+                <th width="10%" >ID</th>
+                <th width="28%">商品名称</th>
+                <th width="11%">出版社</th>
+                <th width="10%">当当价</th>
+                <th width="9%">数量</th>
+                <th width="11%">小计</th>
+            </tr>
+
+            {% if books %}
+            {% for book in books %}
+            <tr>
+                <td style="text-align: center">{{ forloop.counter }}</td>
+                <td align="center">{{ book.book.name }}</td>
+                <td align="center">{{ book.book.pub_company }}</td>
+                <td align="center">¥{{ book.book.dprice }}</td>
+                <td align="center">{{ book.amount }}</td>
+                <td align="center">¥{% widthratio book.amount 1 book.book.dprice %}</td>
+
+            </tr>
+            {% endfor %}
+            {% endif %}
+                     <tr>
+                         <td></td>
+                        <td colspan="1"><div style="height: 32px;width: 120px;background: #FD9E26;display: inline-block;line-height: 32px;text-align: center;">
+                            <a href="{% url 'cart:cartPage' %}" style="color: white;text-decoration: none;font-weight: bold;">取消</a></div></td>
+                        <td></td>
+                        <td colspan="1"><div style="height: 32px;width: 120px;background: #FD9E26;display: inline-block;line-height: 32px;text-align: center;">
+                            <a href="{% url 'indent:indentLogic' %}" style="color: white;text-decoration: none;font-weight: bold;">下一步</a></div></td>
+
+                        <td class="table_zj" colspan="3"><strong>小计总额：</strong><em>¥{{ cart.total_price }}</em></td>
+                    </tr>
+
+        </tbody></table>
+    </div>
+     
+</div>
+
+<div id="footer">
+<div class="footer">
+	<div class="footer_nav_box">
+		<div class="footer_copyright"><span>Copyright (C) 当当网 2004-2014, All Rights Reserved</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001051000098" target="_blank" class="footer_img" rel="nofollow"><img src="http://img4.dangdang.com/bottom/validate.gif"></a><span><a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">京ICP证041189号</a></span><span>出版物经营许可证&nbsp;新出发京批字第直0673号</span></div>
+	</div>
+</div>
+</div>
+    <div class="foot_tip_ad">广告</div>
+    <style>
+        .foot_tip_ad { width:40px; height:40px; font:12px/40px "simsun"; text-align:center; color:#fff; background-color:#474747; position:fixed; right:0; bottom:10px;_position:absolute; _bottom:auto;_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));}
+    </style>
+
+<script>
+    {# *******************************登录欢迎状态********************************* #}
+        $(function(){
+            username = '{{ username }}';
+            if( username != 'None'  ){$('#go_login').css('display','none');$('#go_logout').css('display','inline-block');}
+{#            else{ $('#go_login').css('display','inline-block');$('#go_logout').css('display','none');}#}
+        });
+{#  ********************************登出***************************************#}
+            function check_log(){
+            $.ajax({
+                type:'get',
+                url:'{% url "user:log_out" %}',
+                data:'log=1',
+                success:function (a) {
+
+                    if(a == '1'){$('#go_login').css('display','inline-block');
+                    $('#go_logout').css('display','none');
+                    $('#log_name').css('display','none');
+                    }
+                },
+            });
+            }
+</script>
+</body>
+</html>

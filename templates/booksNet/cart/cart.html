@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% load static %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>购物车</title>
+    <script src="{% static 'booksNet/js/jquery-1.11.1.min.js'%}"></script>
+	<link rel="shortcut icon" href="{% static 'booksNet/images/favicon.ico?v=20160901'%}" type="image/x-icon">
+    <link href="{% static 'booksNet/css/shopping_cart_new.css'%}" rel="stylesheet" type="text/css">
+	<link href="{% static 'booksNet/css/footer_150526.css'%}" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="padding-bottom:82px">
+
+<link href="{% static 'booksNet/css/header_960_150611.css'%}" rel="stylesheet" type="text/css">
+<script src="{% static 'booksNet/js/pagetop2015_0827.js'%}" charset="gb2312" type="text/javascript"></script>
+
+<div id="hd">
+<div id="tools">
+<div class="tools">
+    <div class="ddnewhead_operate" dd_name="顶链接">
+        
+
+        <div class="ddnewhead_welcome" > <span id="nickname">
+            <span id="nickname">欢迎 <span style="color:red;" id="log_name">{% if username %}{{ username }}{% endif %}</span></span>
+            光临当当 请
+            <span id="go_login">
+            <a href="{% url 'user:loginpage' %}" class="login_link" target="_blank">登录</a>
+            <a href="{% url 'user:registpage' %}" target="_blank">免费注册</a></span>
+            <span id="go_logout" style="display:none;">
+                <a href="javascript:void(0)" onclick="check_log()" style="color:red;">登出</a></span>
+        </span>
+
+        </div>
+        <div class="new_head_znx" id="znx_content" style="display:inline-block; float: right"><a href="{% url 'admins:adminsIndex' %}" target="_blank">我的当当</a></div>
+        <div class="new_head_znx" id="znx_content" style="display:none;"></div>
+    </div>
+</div>
+</div>
+<div id="header_end"></div>
+<!--CreateDate  2016-09-28 11:30:01--></div>
+<form action="http://search.dangdang.com/search.aspx" id="bootpagetopSearch" name="bootpagetopSearch" method="GET"></form>
+<script type="text/javascript">var nick_num = 0;initHeaderOperate();</script><script type="text/javascript" src="http://orderb.dangdang.com/queryunpaid?callback=Unpaid_Data"></script>
+		<div class="shoppingcart_wrapper" id="ad_cpt_11850"><div><a href="http://a.dangdang.com/tjump.php?q=ddo84XQOf357bOs8tXGg5%2F%2F0oVoDImt3DFWsMqu7ZMSVsfUMeOQJueASNiMLjq%2FdrXMLCKnVfyKEahteAh1ih%2ByKYrKGzhvL20LVbDzObRambBA0YPpivy5hR5foQ4Rt%2BTB" target="_blank" rel="nofollow"></a></div></div>
+<div class="logo_line">
+    <div class="w960">
+        <div class="shopping_procedure"><span class="current">我的购物车</span><span>填写订单</span><span>完成订单</span></div>
+        <div class="logo"><a href="#"><img src="{% static 'booksNet/images/bz_logo_car.jpg'%}" alt=""></a></div>
+    </div>
+</div>
+<div class="add_line" id="district">
+    <div class="w960">
+    </div>
+</div>
+<div class="w960" id="showTip">
+
+	<!-- 结算时 商品SPU限购提示窗口 start-->
+	<div id="spuPromoLimitDiv" class="pop" style="left:50%; top:50%; margin:-200px 0 0 -253px; position: fixed; z-index: 1004; display: none;">
+		<a class="close"></a>
+		<div class="pop_title">商品限购</div>
+		<div class="popup_limit"></div>
+		<div class="btn_bar limit_bar">
+			<a class="btn_red">确定</a><a class="pop_btn">取消</a>
+		</div>
+	</div>
+	<!-- 结算时 商品SPU限购提示窗口 end-->
+
+	<div id="giftDiv" class="pop_tip gift_select" style="left:50%; top:50%; margin:-200px 0 0 -302px; position: fixed; z-index: 1001; display: none;">
+		<div class="head_title">
+			<div class="title_name">您购物车中以下商品可选为赠品</div>
+			<div class="close"></div>
+		</div>
+		<div class="products_sort" id="giftArea">
+			
+		</div>
+		<a href="javascript:void(0)" class="btn_b fn-back-cart">返回购物车选赠品</a><a id="gift_checkout" href="#" class="btn_b">继续结算，土豪任性不要了</a>
+	</div>
+	<div class="login_tip" style="display: none;">
+		<span class="icon"></span>
+	</div>
+	<div id="remove_pop" class="login_tip" style="display: none;">
+		<span class="icon"></span>
+	</div>
+	<div id="clear_pop" class="login_tip" style="display: none;">
+		<span class="icon"></span>
+	</div>
+</div>
+<div class="w960" id="cart">
+    <ul class="shopping_title" id="j_carttitle">
+        <li class="f1"><a id="j_selectall" href="javascript:void(0)" class="checknow fn-checkall check_on" dd_name="全选">选中</a>全选</li>
+        <li class="f2">商品信息</li>
+        <li class="f3">单价（元）</li>
+        <li class="f4">数量</li>
+        <li class="f4">金额（元）</li>
+        <li class="f5">操作</li>
+    </ul>
+    <div class="fn-shops" id="J_cartContent"><div class="fn-shop">
+        <table border="0" cellspacing="0" cellpadding="0" class="shop_title">
+            <tbody> <tr> <td><a href="javascript:void(0)" dd_name="选中店铺" class="checknow fn-shop-checkall check_on">选中</a></td>
+                <td><span class="shop_icon"></span></td>
+                <td><a href="{% url 'index:index_page' %}" target="_blank">当当自营</a></td>
+                <td></td> <td></td>
+            </tr> </tbody></table><div class="shopping_list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+
+            {% if  books %}
+            {% for book in books %}
+            <tbody data-stock="22388" data-offline="false" data-productid="24147882" data-timestamp="1484488454000" data-orderforspupormo="0">
+            <tr id="tr_424893864" >
+                <td class="row1"> <a href="javascript:void(0)" data-item="424893864" class="fn-product-check checknow check_on">选中</a> </td>
+                <td class="row_img"> <a href="http://product.dangdang.com/24147882.html" target="_blank" dd_name="查看详情"> <img onmouseout="$(this).parent().next().hide()" onmouseover="$(this).parent().next().show()" src="{% static '' %}{{ book.book.book_img.url }}" width="80" height="80"> </a>
+                    <div style="display: none;" class="img_big"><a href="http://product.dangdang.com/24147882.html" dd_name="查看详情" target="_blank"><img src="{% static '' %}{{ book.book.book_img.url }}"></a><span class="arrow"></span></div> </td>
+                <td class="row_name"> <div class="name"> <a href="{% url 'index:bookpage' %}?id={{ book.book.id }}" title="#" target="_blank" dd_name="查看详情" style="word-break:break-all;  word-wrap:break-word;">{{ book.book.name }}（乐嘉2017年全新力作）</a></div>      </td>
+                <td class="row3"><span>¥{{ book.book.dprice }}</span></td>
+                <td data-minbuy="0" class="fn-count-tip row3 "><span class="amount fn-updatecount " data-value="1">
+                    <a dd_name="减少数量" href="javascript:void(0)" onclick="subBook({{ book.book.id }})">-</a>
+                    <input data-value="1" value="{{ book.amount }}" type="text" id="book_num{{ book.book.id }}">
+                    <a dd_name="增加数量" href="javascript:void(0)" onclick="addBook({{ book.book.id }})">+</a>
+                </span></td>
+                <script>
+{#  ************************修改商品数量*************************************  #}
+                    function subBook(a) {
+                        var numid = "#book_num"+a;
+                        var num = Number($(numid).val());
+                        if(num > 1){
+                            $(numid).css('color','black');
+                            $(numid).val(--num);
+                            $.ajax({
+                            type:'get',
+                            url:"{% url 'cart:changeCart' %}",
+                            data:'book_id='+a+'&book_amount='+num,
+                            success:function (b) {
+                                location.href='{% url "cart:cartPage" %}';
+                            },
+                            });
+                        }else{
+                              alert('/(ㄒoㄒ)/~~ 不能再减了。。。不喜欢就删掉该商品吧！');
+                        }
+                    }
+
+                    function addBook(a) {
+                        var numid = "#book_num"+a;
+                        var num = Number($(numid).val());
+                        $(numid).css('color','black');
+                        $(numid).val(++num);
+                        $.ajax({
+                            type:'get',
+                            url:"{% url 'cart:changeCart' %}",
+                            data:'book_id='+a+'&book_amount='+num,
+                            success:function (b) {
+
+                                location.href='{% url "cart:cartPage" %}';
+                            },
+                        });
+                    }
+                </script>
+                <td class="row4"><span class="red">¥{% widthratio book.amount 1 book.book.dprice %}</span></td>
+                <td class="row5 "><span><a href="javascript:void(0)" data-item="424893864" class="fn-add-wish" dd_name="加入收藏按钮">移入收藏</a></span><span><a href="{% url 'cart:delCart' %}?id={{ book.book.id }}&book_amount={{ book.amount }}" data-item="424893864" class="fn-remove-product" dd_name="删除普通品">删除</a></span></td>
+            </tr>
+            </tbody>
+            {% endfor %}
+            {% else %}
+            <div style="height: 50px; text-align: center; font-weight: bold;line-height: 50px;"><a href="{% url 'index:index_page' %}" target="_blank">/(ㄒoㄒ)/~~~~  购物车还是空的，去选购......</a></div>
+            {% endif %}
+
+
+            <tfoot><tr class="total"> <td class="row1">&nbsp;</td> <td class="row_img">店铺合计</td> <td colspan="2">&nbsp;</td> <td colspan="3" class="row4"><span class="red big ooline alignright">¥{{ cart.total_price }}</span></td> </tr></tfoot></table></div>
+        <div class="shipping_add" style="display:none;"></div></div></div>
+    <div class="shoppingcart_loading" id="J_cartLoading" style="display: none;"><img height="30" width="30" src="{% static 'booksNet/images/loading.gif'%}"></div>
+</div>
+<div class="w960" id="weipinboxarea" style="display: none"><div class="login_tip"><span class="icon"></span>购物车中有<a id="weipinhui" href="http://v.dangdang.com" class="icon_eve weipin" style="display: none;">尾品汇</a><a id="zuizhidang" href="http://z.dangdang.com" class="icon_eve zhidang" style="display: none;">z值当</a>商品，请在<span class="time" id="J_limitedMinute"></span><span class="time" id="J_limitedSecond"></span>内结算.<a herf="javascript:;" class="more fn-vnewz-tips">了解限时结算&gt;&gt;</a></div></div>
+<div id="hide_div" style="height:0px;visibility:hidden;"></div>
+<div style="position:static;bottom:-20px;z-index: 101;width:100%;left:0px;">
+  <div class="shopping_total" id="J_totalMoneyBlock">
+    <div class="shopping_total_right">
+        <a class="total_btn fn-checkout" href="{% url 'indent:indentConfirm' %}?total_price={{ cart.total_price }}" id="checkout_btn" dd_name="结算">结&nbsp;&nbsp;算</a>
+        <div class="subtotal">
+            <p><span class="cartsum">总计(不含运费)：</span><span id="payAmount" class="price">¥{{ cart.total_price }}</span></p>
+
+            <p><span class="cartsum">已节省：</span><span id="totalFavor">¥{{ cart.save_price }}</span></p>
+        </div>
+        <div class="pop_del pop_ebook fn-ck" id="ck_tip" style="display:none">
+			<h1>电子书重复购买提示</h1>
+			<p></p>
+			<a id="ck_link" href="#" class="pop_btn">朕知道了</a>
+		</div>
+    </div>
+    <div class="shopping_total_left" id="J_leftBar">
+        <a id="j_selectall2" href="javascript:void(0)" class="checknow fn-checkall check_on" dd_name="全选">选中</a>全选
+        <a id="j_removeproducts" href="javascript:void(0)" class="fn-batch-remove" dd_name="批量删除按钮">批量删除</a>
+        <span>已选择<font color="red">{{ cart.carItem|length }}</font>件商品</span>
+        <div id="J_batchRemoveProductBox" style="display: none;z-index:-1;left:0px;" class="pop_del"><p>您确定要批量删除商品吗？</p><a href="javascript:;" class="pop_btn fn-confirm-batchremovebox">确定</a><a href="javascript:;" class="pop_btn fn-close-batchremovebox">取消</a></div>
+        <div id="J_batchAddWishBox" style="display: none;z-index:-1;left:85px;" class="pop_del col "><p>您确定要批量移入收藏吗？</p><a href="javascript:;" class="pop_btn fn-confirm-batchaddwish">确定</a><a href="javascript:;" class="pop_btn fn-close-batchwishbox">取消</a></div>
+    </div>
+  </div>
+</div>
+<div id="J_errorBox" style="display: none;z-index:102" class="pop_del col">
+    <p></p>
+    <a class="pop_btn fn-close-removebox" href="javascript:;">确定</a>
+</div>
+<div id="J_addToWishTipHtml" style="display: none; position: absolute;"></div>
+<div id="J_addWishBox" style="display: none" class="pop_del col "><p>移入收藏后，将不在购物车显示，是否继续操作？</p><a href="javascript:;" class="pop_btn fn-confirm-addwish">确定</a><a href="javascript:;" class="pop_btn fn-close-wishbox">取消</a></div>
+<div id="J_removeProductBox" style="display: none;" class="pop_del"><p>您确定要删除商品吗？</p><a href="javascript:;" class="pop_btn fn-confirm-removebox">确定</a><a href="javascript:;" class="pop_btn fn-close-removebox">取消</a></div>
+<div id="J_removeGiftBox" style="display: none;" class="pop_del"><p>您确定要删除赠品吗？</p><a href="javascript:;" class="pop_btn fn-confirm-removegiftbox">确定</a><a href="javascript:;" class="pop_btn fn-close-removebox">取消</a></div>
+<div class="w960">
+    <div class="empty" id="empty" style="display:none">
+        <p>您的购物车还是空的，您可以：</p>
+        <a href="http://www.dangdang.com" class="btn">去逛逛</a>
+    </div>
+    
+</div>
+
+<div class="pop_del pop_ebook" style="left:460px; right:auto; top:-130px;display: none;" id="J_vnewzTipBox">
+	<a href="#" class="close"></a>
+	<h1>限时说明</h1>
+	<p>由于尾品会和新品汇的商品库存有限，我们只能为您保留<span class="red">20分钟</span>，否则尾品会及新品汇的商品将被删除，请尽快结算。</p>
+</div>
+
+
+<div id="footer">
+<div class="footer">
+	<div class="footer_nav_box">
+		<div class="footer_copyright"><span>Copyright (C) 当当网 2004-2014, All Rights Reserved</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001051000098" target="_blank" class="footer_img" rel="nofollow"><img src="http://img4.dangdang.com/bottom/validate.gif"></a><span><a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">京ICP证041189号</a></span><span>出版物经营许可证&nbsp;新出发京批字第直0673号</span></div>
+	</div>
+</div>
+</div>
+    <div class="foot_tip_ad">广告</div>
+    <style>
+        .foot_tip_ad { width:40px; height:40px; font:12px/40px "simsun"; text-align:center; color:#fff; background-color:#474747; position:fixed; right:0; bottom:10px;_position:absolute; _bottom:auto;_top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));}
+    </style>
+
+<script>
+    {# *******************************登录欢迎状态********************************* #}
+        $(function(){
+            username = '{{ username }}';
+            if( username != 'None'  ){$('#go_login').css('display','none');$('#go_logout').css('display','inline-block');}
+{#            else{ $('#go_login').css('display','inline-block');$('#go_logout').css('display','none');}#}
+        });
+{#  ********************************登出***************************************#}
+            function check_log(){
+            $.ajax({
+                type:'get',
+                url:'{% url "user:log_out" %}',
+                data:'log=1',
+                success:function (a) {
+
+                    if(a == '1'){$('#go_login').css('display','inline-block');
+                    $('#go_logout').css('display','none');
+                    $('#log_name').css('display','none');
+                    }
+                },
+            });
+            }
+</script>
+</body>
+</html>

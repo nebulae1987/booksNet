@@ -1,0 +1,97 @@
+<style>
+	.d1{
+		background-color: rgb(53,60,68);
+		position: relative;
+		height: 30px;
+		line-height: 30px;
+		padding-left: 10px;
+	}
+	.s1{
+		font-size: 12px;
+		color: white;
+	}
+	.s2{
+		position: absolute;
+		right: 10px;
+	}
+	.s2 a{
+		color: white;
+		font-size: 12px;
+		text-decoration: none;
+	}
+	.t1{
+		border-color:aliceblue;
+		margin-top: 2px;
+		font-size: 12px;
+		text-align: center;
+		background-color: rgb(230,242,254);
+	}
+	.bottom{
+		font-size: 13px;
+		padding-left: 15px;
+		position: relative;
+	}
+	.bs{
+		position: absolute;
+		right: 40px;
+	}
+	.bs a{
+		text-decoration: none;
+		color: black;
+	}
+	.bs a:hover{
+		color: cornflowerblue;
+		text-decoration: underline;
+	}
+</style>
+<div class="d1">
+	<span class="s1">商品管理</span>
+	<span class="s2">
+		<a href="#">添加</a>
+		<a href="#">删除</a>
+	</span>
+</div>
+<table border="2" width="100%" cellspacing="0" class="t1">
+	<tr>
+		<th>类别ID</th>
+		<th>类别名称</th>
+		<th>分类类型(一级分类/二级分类)</th>
+	</tr>
+    {% for i in a %}
+    <tr>
+		<td>{{ i.id }}</td>
+		<td>{{ i.category_name }}</td>
+		<td>
+            {% if i.category_p == 0 %}
+             一级分类
+            {% else %}
+            二级分类
+            {% endif %}
+            (类别编号：{{ i.category_p }})
+        </td>
+	</tr>
+    {% endfor %}
+
+{#    {% for j in b %}#}
+{#    <tr>#}
+{#		<td>{{ j.id }}</td>#}
+{#		<td>{{ j.category_name }}</td>#}
+{#		<td>  二级分类  </td>#}
+{#	</tr>#}
+{#    {% endfor %}#}
+
+
+</table>
+<div class="bottom">
+	共有{{ a.paginator.count }} 条记录，当前第{{ a.number }} 页，共{{ a.paginator.num_pages }} 页
+	<span class="bs">
+        <a href="{% url 'admins:splb' %}?num=1" style="margin-right: 20px;">首页</a>
+        {% if a.has_revious %}
+		<a href="{% url 'admins:splb' %}?num={{ a.previous_page_number }}" style="margin-right: 20px;">上一页</a>
+		{% endif %}
+        {% if a.has_next %}
+		<a href="{% url 'admins:splb' %}?num={{ a.next_page_number }}">下一页</a>
+        {% endif %}
+        <a href="{% url 'admins:splb' %}?num={{ a.paginator.num_pages }}" style="margin-right: 20px;">尾页</a>
+	</span>
+</div>
